@@ -1,21 +1,20 @@
-import pytest
-
 from pathlib import Path
+
+import pytest
 
 from src.helpers.screenshots import Screenshots
 
 
-@pytest.fixture(scope='session', autouse=True)
-def base_url(item) -> Path:
-    return item.option.base_url
-
 def pytest_addoption(parser):
+    """
+    Custom input parameters
+    """
     parser.addoption(
         "--base_url",
         action="store",
         dest="base_url",
-        default="http://localhost:3000/",
-        help="Default part of the url of the application"
+        default="http://localhost:3000",
+        help="Default part of the url of the application",
     )
     parser.addoption(
         "--screenshot-path",
@@ -32,8 +31,12 @@ def pytest_addoption(parser):
         help="Path to the screenshots folder",
     )
 
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item):
+    """
+    Create report with the screenshoot if the UI mark was used
+    """
     pytest_html = item.config.pluginmanager.getplugin("html")
     outcome = yield
     screenshot_path = ""
@@ -44,8 +47,8 @@ def pytest_runtest_makereport(item):
     if report.when == "call" and "page" in item.funcargs:
         if report.failed and "page" in item.funcargs:
             page = item.funcargs["page"]
-            tracing_path = item.config.option.tracing_path + "/" + item.name + ".zip"
-            page.context.tracing.stop(path=tracing_path)
+            # tracing_path = item.config.option.tracing_path + "/" + item.name + ".zip"
+            # page.context.tracing.stop(path=tracing_path)
             screenshot_path = item.config.option.screenshot_path
             if screenshot_path:
                 screenshots = Screenshots(
