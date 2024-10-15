@@ -59,6 +59,9 @@ class WithIdsPageLocators:
     def date_field(self) -> Locator:
         return self.page.get_by_test_id("dti-date")
 
+    def color_pick(self) -> Locator:
+        return self.page.get_by_test_id("dti-color")
+
 
 class WithIdsPage(BasePage):
     """
@@ -152,9 +155,22 @@ class WithIdsPage(BasePage):
 
     def set_date(self, date: str) -> None:
         """
-        Date has to be a string in format: ddmmyyyy
+        Date has to be a string in format: yyyy-mm-dd
         """
         self.locators.results_container().scroll_into_view_if_needed()
         self.locators.date_field().fill(date)
         self.locators.date_field().press("Tab")
         expect(self.locators.results_value()).to_have_text("Selected date: " + date)
+
+    def select_color_by_hex(self, hex_color: str) -> None:
+        """
+        Provide color in hex triplet: #7a223b
+        """
+        self.locators.results_container().scroll_into_view_if_needed()
+        self.locators.color_pick().fill(hex_color)
+        hex_color = hex_color.lstrip("#")
+        splitted = re.findall(r".{1,2}", hex_color)
+        dec_color = [int(color, 16) for color in splitted]
+        expect(self.locators.results_value()).to_have_text(
+            f"New selected color: #{hex_color} as hex and in RGB: rgb{tuple(dec_color)}"
+        )
