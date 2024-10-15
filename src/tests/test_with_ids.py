@@ -101,3 +101,13 @@ def test_date_change(with_ids_page, test_date) -> None:
 
     # Set date and verify the result
     with_ids_page.set_date(test_date)
+
+
+@pytest.mark.with_ids
+@pytest.mark.parametrize("hex_color", ["#000000", "#ffffff", "#7f3b22"])
+def test_select_color(with_ids_page, hex_color) -> None:
+    # Visit Simple Elements with ids page
+    with_ids_page.visit()
+
+    # Select colot and verify the result
+    with_ids_page.select_color_by_hex(hex_color)
