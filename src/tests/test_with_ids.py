@@ -5,7 +5,7 @@ from src.pages.practice_pages.simple_elements.with_ids_page import WithIdsPage
 
 
 @pytest.mark.with_ids
-def test_label_txt(with_ids_page) -> None:
+def test_label_txt(with_ids_page: WithIdsPage) -> None:
     # Visit Simple Elements page with ids
     with_ids_page.visit()
 
@@ -16,7 +16,7 @@ def test_label_txt(with_ids_page) -> None:
 
 
 @pytest.mark.with_ids
-def test_push_button(with_ids_page) -> None:
+def test_push_button(with_ids_page: WithIdsPage) -> None:
     # Visit Simple Element page with ids
     with_ids_page.visit()
 
@@ -25,7 +25,7 @@ def test_push_button(with_ids_page) -> None:
 
 
 @pytest.mark.with_ids
-def test_select_checkbox(with_ids_page) -> None:
+def test_select_checkbox(with_ids_page: WithIdsPage) -> None:
     # Visit Simple Elements page with ids
     with_ids_page.visit()
 
@@ -38,7 +38,7 @@ def test_select_checkbox(with_ids_page) -> None:
 
 @pytest.mark.with_ids
 @pytest.mark.parametrize("button_no", [1, 2, 3])
-def test_radio_buttons(with_ids_page, button_no) -> None:
+def test_radio_buttons(with_ids_page: WithIdsPage, button_no: int) -> None:
     # Visit Simple Element page with ids
     with_ids_page.visit()
 
@@ -47,7 +47,7 @@ def test_radio_buttons(with_ids_page, button_no) -> None:
 
 
 @pytest.mark.with_ids
-def test_input_field(with_ids_page) -> None:
+def test_input_field(with_ids_page: WithIdsPage) -> None:
     # Visit Simple Element page with ids
     with_ids_page.visit()
 
@@ -56,7 +56,7 @@ def test_input_field(with_ids_page) -> None:
 
 
 @pytest.mark.with_ids
-def test_text_area(with_ids_page) -> None:
+def test_text_area(with_ids_page: WithIdsPage) -> None:
     # Visit Simple Element page with ids
     with_ids_page.visit()
 
@@ -66,7 +66,7 @@ def test_text_area(with_ids_page) -> None:
 
 @pytest.mark.with_ids
 @pytest.mark.parametrize("option_value", ["option1", "option2", "option3"])
-def test_select_option_in_dropdown(with_ids_page, option_value) -> None:
+def test_select_option_in_dropdown(with_ids_page: WithIdsPage, option_value: str) -> None:
     # Visit Simple Element page with ids
     with_ids_page.visit()
 
@@ -76,7 +76,7 @@ def test_select_option_in_dropdown(with_ids_page, option_value) -> None:
 
 @pytest.mark.with_ids
 @pytest.mark.parametrize("slider_value", [1, 100, 55])
-def test_slider_item(with_ids_page, slider_value) -> None:
+def test_slider_item(with_ids_page: WithIdsPage, slider_value: int) -> None:
     # Visit Simple Elements page with ids
     with_ids_page.visit()
 
@@ -85,7 +85,7 @@ def test_slider_item(with_ids_page, slider_value) -> None:
 
 
 @pytest.mark.with_ids
-def test_hover_over_label(with_ids_page) -> None:
+def test_hover_over_label(with_ids_page: WithIdsPage) -> None:
     # Visit Simple Elements page with ids
     with_ids_page.visit()
 
@@ -95,7 +95,7 @@ def test_hover_over_label(with_ids_page) -> None:
 
 @pytest.mark.with_ids
 @pytest.mark.parametrize("test_date", ["1900-01-01", "2024-06-15", "2300-12-31"])
-def test_date_change(with_ids_page, test_date) -> None:
+def test_date_change(with_ids_page: WithIdsPage, test_date: str) -> None:
     # Visit Simple Elements with ids page
     with_ids_page.visit()
 
@@ -105,7 +105,7 @@ def test_date_change(with_ids_page, test_date) -> None:
 
 @pytest.mark.with_ids
 @pytest.mark.parametrize("hex_color", ["#000000", "#ffffff", "#7f3b22"])
-def test_select_color(with_ids_page, hex_color) -> None:
+def test_select_color(with_ids_page: WithIdsPage, hex_color: str) -> None:
     # Visit Simple Elements with ids page
     with_ids_page.visit()
 
