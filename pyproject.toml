@@ -30,7 +30,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-line-length = 88
+line-length = 80
 include = '\.pyi?$'
 exclude = '''
 
@@ -56,10 +56,10 @@ profile = "black"
 multi_line_output = 3
 
 [tool.pyright]
+venvPath = "."
+venv = ".venv"
+executionEnvironments = [{ root = "." }]
 include = ["src"]
-executionEnvironments = [
-  { root = "."}
-]
 
 [tool.mypy]
 ignore_missing_importe = true

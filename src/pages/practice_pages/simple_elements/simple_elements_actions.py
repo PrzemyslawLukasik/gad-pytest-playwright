@@ -1,78 +1,20 @@
 import re
-from dataclasses import dataclass
 
-from playwright.sync_api import Locator, Page, expect
+from playwright.sync_api import Page, expect
 
 from src.pages.base_page import BasePage
 
 
-@dataclass
-class WithIdsPageLocators:
-    """
-    Simple elements page with ids on all elements.
-
-    Id and data-testid are available.
-    """
-
-    def __init__(self, page: Page) -> None:
-        self.page = page
-
-    def label(self) -> Locator:
-        return self.page.get_by_test_id("dti-label-element")
-
-    def click_me_button(self) -> Locator:
-        return self.page.get_by_test_id("dti-button-element")
-
-    def results_value(self) -> Locator:
-        return self.page.get_by_test_id("dti-results")
-
-    def results_container(self) -> Locator:
-        return self.page.locator("#results-container")
-
-    def checkbox_input(self) -> Locator:
-        return self.page.get_by_test_id("dti-checkbox")
-
-    def radio_btn_1(self) -> Locator:
-        return self.page.get_by_test_id("dti-radio1")
-
-    def radio_btn_2(self) -> Locator:
-        return self.page.get_by_test_id("dti-radio2")
-
-    def radio_btn_3(self) -> Locator:
-        return self.page.get_by_test_id("dti-radio3")
-
-    def slider(self) -> Locator:
-        return self.page.get_by_test_id("dti-range")
-
-    def input_field(self) -> Locator:
-        return self.page.get_by_test_id("dti-input")
-
-    def text_area(self) -> Locator:
-        return self.page.get_by_test_id("dti-textarea")
-
-    def droprown_menu(self) -> Locator:
-        return self.page.get_by_test_id("dti-dropdown")
-
-    def hover_label(self) -> Locator:
-        return self.page.get_by_test_id("dti-tooltip-element")
-
-    def date_field(self) -> Locator:
-        return self.page.get_by_test_id("dti-date")
-
-    def color_pick(self) -> Locator:
-        return self.page.get_by_test_id("dti-color")
-
-
-class WithIdsPage(BasePage):
+class SimpleElementsActions(BasePage):
     """
     Simple elements page
     """
 
-    def __init__(self, page: Page):
+    def __init__(self, page: Page, locators):
         super().__init__(page)
-        self.locators = WithIdsPageLocators(self.page)
+        self.locators = locators
 
-        self.url = "/practice/simple-elements.html"
+        self.url = locators.url
 
     def visit(self) -> None:
         """
@@ -89,7 +31,9 @@ class WithIdsPage(BasePage):
 
     def click_on_click_me_btn(self) -> None:
         self.locators.click_me_button().click()
-        expect(self.locators.results_value()).to_have_text("You clicked the button!")
+        expect(self.locators.results_value()).to_have_text(
+            "You clicked the button!"
+        )
 
     def is_checkbox_selected(self) -> bool:
         return True if self.locators.checkbox_input().is_checked() else False
@@ -97,13 +41,17 @@ class WithIdsPage(BasePage):
     def select_checkbox(self) -> None:
         if not self.is_checkbox_selected():
             self.locators.checkbox_input().click()
-            expect(self.locators.results_value()).to_have_text("Checkbox is checked!")
+            expect(self.locators.results_value()).to_have_text(
+                "Checkbox is checked!"
+            )
 
     def deselect_checkbox(self) -> None:
         if self.is_checkbox_selected():
             self.locators.checkbox_input().click()
             self.locators.checkbox_input().scroll_into_view_if_needed()
-            expect(self.locators.results_value()).to_have_text("Checkbox is unchecked!")
+            expect(self.locators.results_value()).to_have_text(
+                "Checkbox is unchecked!"
+            )
 
     def check_radio_no(self, no: int) -> None:
         self.locators.__getattribute__(f"radio_btn_{no}")().click()
@@ -139,7 +87,9 @@ class WithIdsPage(BasePage):
         self.locators.droprown_menu().click()
         self.locators.droprown_menu().select_option(value=option)
         self.locators.droprown_menu().scroll_into_view_if_needed()
-        expect(self.locators.results_value()).to_have_text("Selected option: " + option)
+        expect(self.locators.results_value()).to_have_text(
+            "Selected option: " + option
+        )
 
     def set_slider_value(self, value: int) -> None:
         self.locators.slider().fill(str(value))
@@ -151,7 +101,9 @@ class WithIdsPage(BasePage):
     def hover_over_hover_label(self) -> None:
         self.locators.results_container().scroll_into_view_if_needed()
         self.locators.hover_label().hover()
-        expect(self.locators.results_value()).to_have_text("Mouse over event occurred!")
+        expect(self.locators.results_value()).to_have_text(
+            "Mouse over event occurred!"
+        )
 
     def set_date(self, date: str) -> None:
         """
@@ -160,7 +112,9 @@ class WithIdsPage(BasePage):
         self.locators.results_container().scroll_into_view_if_needed()
         self.locators.date_field().fill(date)
         self.locators.date_field().press("Tab")
-        expect(self.locators.results_value()).to_have_text("Selected date: " + date)
+        expect(self.locators.results_value()).to_have_text(
+            "Selected date: " + date
+        )
 
     def select_color_by_hex(self, hex_color: str) -> None:
         """

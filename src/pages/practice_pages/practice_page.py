@@ -15,7 +15,9 @@ class PracticePageLocators:
         self.page = page
 
     def heading(self) -> Locator:
-        return self.page.get_by_role("heading", name="Practice your test automation")
+        return self.page.get_by_role(
+            "heading", name="Practice your test automation"
+        )
 
     # Simple Elements
 
