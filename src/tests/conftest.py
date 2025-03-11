@@ -7,6 +7,7 @@ from src.pages.main_page import MainPage
 from src.pages.practice_pages.practice_page import PracticePage
 from src.pages.practice_pages.simple_elements.no_ids_page import NoIdsPage
 from src.pages.practice_pages.simple_elements.with_ids_page import WithIdsPage
+from src.pages.practice_pages.simple_elements.not_present_disabled import NotPresentDisabled
 
 
 @pytest.fixture
@@ -31,3 +32,9 @@ def with_ids_page(page: Page) -> Generator[WithIdsPage, None, None]:
 def no_ids_page(page: Page) -> Generator[NoIdsPage, None, None]:
     no_ids_page = NoIdsPage(page)
     yield no_ids_page
+
+
+@pytest.fixture
+def not_present_disabled(page: Page) -> Generator[NotPresentDisabled, None, None]:
+    not_present_disabled = NotPresentDisabled(page)
+    yield not_present_disabled
