@@ -22,6 +22,12 @@ class NoIdsLocators:
     def results_container(self) -> Locator:
         return self.page.locator("#results-container")
 
+    def click_me_button(self) -> Locator:
+        return self.page.get_by_role("button", name="Click me!")
+
+    def checkbox(self) -> Locator:
+        return self.page.get_by_role("checkbox")
+
 
 class NoIdsPage(BasePage):
     def __init__(self, page: Page) -> None:
@@ -41,3 +47,19 @@ class NoIdsPage(BasePage):
 
     def verify_label_text_by_css_cust_attr(self, text: str) -> None:
         expect(self.locators.label_by_css_cust_attr()).to_have_text(text)
+
+    def click_on_click_me_button(self) -> None:
+        expect(self.locators.click_me_button()).not_to_be_visible()
+        self.locators.click_me_button().click()
+        expect(self.locators.results_value()).to_have_text("You clicked the button!")
+
+    def _is_checkbox_selected(self) -> bool:
+        return True if self.locators.checkbox().is_checked() else False
+
+    def click_checkbox(self, select: bool = True) -> None:
+        if not self.locators.checkbox().is_checked() and select is True:
+            self.locators.checkbox().click()
+            expect(self.locators.checkbox()).to_be_checked()
+        elif self.locators.checkbox().is_checked() and select is False:
+            self.locators.checkbox().click()
+            expect(self.locators.checkbox()).not_to_be_checked()
